@@ -8,9 +8,6 @@ import { SafeAreaView } from "react-navigation";
 /* CUSTOM MODULES */
 import Navigator from "./navigation";
 
-/* CUSTOM MODULES */
-import { HeaderRightTape } from "src/components";
-
 const styles = StyleSheet.create({
   root: {
     flex: 1,
@@ -24,6 +21,5 @@ export default () => (
       horizontal: "always",
     }}>
     <Navigator />
-    <HeaderRightTape />
   </SafeAreaView>
 );

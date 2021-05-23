@@ -326,7 +326,7 @@ export default class extends Component<Props, State> {
               <RefreshControl
                 refreshing={refreshing}
                 onRefresh={this._handleRefresh}
-                tintColor="transparent"
+                tintColor="black"
               // colors={["red", "green"]}
               />
             }
