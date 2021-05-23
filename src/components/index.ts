@@ -1,0 +1,12 @@
+export { default as BaseInput } from "src/components/base_input/base_input";
+export { default as BaseText } from "src/components/base_text/base_text";
+export { default as Button } from "src/components/button/button";
+export { default as Checkbox } from "src/components/checkbox/checkbox";
+export { default as FastImageComponent } from "src/components/image/image";
+export { default as HeaderTitle } from "src/components/header/header_title/header_title";
+export { default as HeaderRightTape } from "src/components/header/header_right_tape/header_right_tape";
+export { default as KeyboardWrapper } from "src/components/keyboard_wrapper/keyboard_wrapper";
+export { default as CustomWrapperKeyboard } from "src/components/keyboard_wrapper/custom_wrapper_keyboard";
+export { default as Row } from "src/components/row/row";
+export { default as Icons } from "src/components/icons/icons";
+export { default as ImagePlaceholder } from "src/components/avatar_placeholder";

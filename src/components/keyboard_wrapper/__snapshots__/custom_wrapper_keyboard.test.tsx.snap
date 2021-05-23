@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomWrapperKeyboard tests renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+      "transform": Array [
+        Object {
+          "translateY": 0,
+        },
+      ],
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "width": "100%",
+      }
+    }
+  >
+    <TextInput
+      allowFontScaling={false}
+      onChangeText={[Function]}
+      placeholder="placeholder"
+      rejectResponderTermination={true}
+      style={
+        Array [
+          Object {
+            "borderColor": "#D7D9E0",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "flex": 1,
+            "fontSize": 24,
+            "height": 68.5,
+            "paddingHorizontal": 24,
+          },
+          undefined,
+          undefined,
+          Object {
+            "borderColor": "#D7D9E0",
+          },
+        ]
+      }
+      underlineColorAndroid="transparent"
+      value="value"
+    />
+  </View>
+</View>
+`;
