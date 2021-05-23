@@ -1,16 +1,20 @@
 import React from "react";
-import { Image, View } from "react-native";
+import { Image, View, ImageSourcePropType, ImageStyle } from "react-native";
 import styles from "./styles";
 
 /* CUSTOM MODULES */
 import { Icons } from "src/components";
 
-// type TState {
-//   state: boolean
-// }
+type TState = {
+  isError: boolean
+}
+type TProps = {
+  source: ImageSourcePropType,
+  style: ImageStyle,
+}
 
 class ImageLoad extends React.Component<TProps, TState> {
-  constructor(props) {
+  constructor(props: TProps) {
     super(props);
     this.state = {
       isError: false,

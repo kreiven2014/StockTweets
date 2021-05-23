@@ -1,6 +1,7 @@
 /* MODULES */
 import React from "react";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
+import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import { createIconSet } from "react-native-vector-icons";
 
 /* CUSTOM MODULES */
@@ -9,7 +10,7 @@ import { getFontWithScaleFactor } from "src/utils/layout";
 /* TYPES */
 export interface Props {
   name: string;
-  type?: "svgIcon" | "material";
+  type?: "svgIcon" | "material" | "simple_line";
   size: number;
   color: string;
 }
@@ -25,6 +26,7 @@ const svgIcon = createIconSet(
 const IconTypes = {
   svgIcon,
   material: MaterialIcon,
+  simple_line: SimpleLineIcons,
 };
 
 export default (props: Props): JSX.Element => {
@@ -32,7 +34,6 @@ export default (props: Props): JSX.Element => {
   const IconDynamic = IconTypes[type || "svgIcon"];
   return (
     // fix: name = element because an index signature declaring the expected key / value
-    // $FlowFixMe
     <IconDynamic size={getFontWithScaleFactor(size)} {...restProps} />
   );
 };

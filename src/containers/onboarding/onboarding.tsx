@@ -69,8 +69,8 @@ export default class extends PureComponent<Props> {
         <View style={styles.slide2}>
           <Text style={styles.sliderTitle}>Get What People Think</Text>
           <Icons
-            type="material"
-            name="chat"
+            type="simple_line"
+            name="bubbles"
             size={200}
             color={COLORS.CARRIBEAN_GREEN}
           />

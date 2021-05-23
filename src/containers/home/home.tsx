@@ -13,6 +13,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 /* MODULES */
 // import { getSymbols } from "src/utils/requests";
 
+import reactStringReplace from "react-string-replace"
+
 import axios from "axios";
 
 /* CUSTOM MODULES */
@@ -44,6 +46,15 @@ export interface State {
 }
 
 const PROXY = "https://pacific-taiga-61753.herokuapp.com";
+const generateHighlightedText = (caption: string, searchValue: string) => {
+  return (
+    <Text>
+      {reactStringReplace(caption, searchValue, (match, i) => (
+        <Text style={{ fontWeight: 'bold' }} key={i}>{match}</Text>
+      ))}
+    </Text>
+  );
+}
 
 export default class extends Component<Props, State> {
   static defaultProps: IDefaultProps;
@@ -250,18 +261,16 @@ export default class extends Component<Props, State> {
               data={this.state.symbols}
               keyExtractor={this.keyExtractor}
               maxToRenderPerBatch={1}
-              renderItem={({ item }) => (
+              renderItem={({ item }) =>
                 <TouchableOpacity
                   style={styles.symbolRow}
                   onPress={() => {
                     this.selectSymbol(item.symbol);
                   }}>
                   <Text style={styles.symbol}>{item.symbol}</Text>
-                  <Text style={styles.symbolTitle} numberOfLines={1}>
-                    {item.title}
-                  </Text>
+                  {generateHighlightedText(item.title, query)}
                 </TouchableOpacity>
-              )}
+              }
             />
           </View>
         ) : (
