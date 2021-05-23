@@ -27,8 +27,8 @@ export default (props: Props): JSX.Element => {
       source={
         typeof uri === "string"
           ? {
-              uri,
-            }
+            uri,
+          }
           : uri
       }
       resizeMode={resizeMode || FastImage.resizeMode.contain}

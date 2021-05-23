@@ -19,7 +19,7 @@ export interface Props {
   numberOfLines?: number;
 }
 
-export default (props: Props): JSX.Element => {
+export default (props: Props):  => {
   const { style, children, isTitle, textKey, ...restProps } = props;
 
   return (
