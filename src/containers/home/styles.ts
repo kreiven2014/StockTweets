@@ -29,6 +29,7 @@ export default StyleSheet.create({
   searchIcon: {
     marginRight: getWidthWithScaleFactor(5),
     marginLeft: getWidthWithScaleFactor(5),
+    justifyContent: "center"
   },
   horizontalTooltipsBlock: {
     flexDirection: "row",

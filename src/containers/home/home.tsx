@@ -45,6 +45,7 @@ export interface State {
 }
 
 const PROXY = "https://pacific-taiga-61753.herokuapp.com";
+
 const generateHighlightedText = (caption: string, searchValue: string) => {
   return (
     <Text>
@@ -327,13 +328,10 @@ export default class extends Component<Props, State> {
                 refreshing={refreshing}
                 onRefresh={this._handleRefresh}
                 tintColor="black"
-              // colors={["red", "green"]}
               />
             }
           />
-
         </Animated.View>
-
       </View>
     );
   }
