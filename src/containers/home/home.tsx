@@ -7,18 +7,17 @@ import {
   RefreshControl,
   Text,
   FlatList,
+  Animated
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 /* MODULES */
-// import { getSymbols } from "src/utils/requests";
-
 import reactStringReplace from "react-string-replace"
-
 import axios from "axios";
 
 /* CUSTOM MODULES */
 import { HeaderTitle, Icons } from "src/components";
+import SIZES from "src/theme/sizes";
 
 import Tweet from "./components/tweet/tweet";
 import Tooltip from "./components/tooltip/tooltip";
@@ -72,6 +71,7 @@ export default class extends Component<Props, State> {
     tweets: [],
     symbols: [],
     query: "",
+    animation: new Animated.Value(SIZES.HEIGHT),
   };
 
   timeout: any = null; // TODO(mikle): find timeout type
@@ -151,7 +151,7 @@ export default class extends Component<Props, State> {
   openDrawer = (): void => {
     const { navigation } = this.props;
     if (navigation) {
-      navigation.openDrawer();
+      navigation.openDrawer(); // TODO(mikle): add type to openDrawer
     }
   };
 
@@ -164,6 +164,7 @@ export default class extends Component<Props, State> {
           selectedResultIndex: index,
         }),
         () => {
+          this.handleShow();
           this.getInitialList(this.state.searchResults[index]);
         },
       );
@@ -190,6 +191,7 @@ export default class extends Component<Props, State> {
             : searchResults.length,
       }),
       () => {
+        this.handleShow();
         this.getInitialList(symbol);
       },
     );
@@ -205,6 +207,7 @@ export default class extends Component<Props, State> {
       }),
       () => {
         if (this.state.selectedResultIndex !== null) {
+          this.handleHide();
           this.getInitialList(
             this.state.searchResults[this.state.selectedResultIndex],
           );
@@ -214,6 +217,22 @@ export default class extends Component<Props, State> {
         }
       },
     );
+  };
+
+  handleShow = () => {
+    Animated.timing(this.state.animation, {
+      toValue: 0,
+      duration: 1500,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  handleHide = () => {
+    Animated.timing(this.state.animation, {
+      toValue: 0,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
   };
 
   _handleRefresh = async () => {
@@ -233,7 +252,7 @@ export default class extends Component<Props, State> {
   // ==================
 
   render(): JSX.Element {
-    const { query, refreshing, selectedResultIndex } = this.state;
+    const { query, refreshing, selectedResultIndex, animation } = this.state;
     return (
       <View style={styles.container}>
         <View style={styles.searchField}>
@@ -291,24 +310,30 @@ export default class extends Component<Props, State> {
           </View>
         )}
         {!!this.state.tweets?.length && (
-          <Text>Total Amount of Tweets: {this.state.tweets.length}</Text>
+          <Text style={styles.tolalAmount}>Total Amount of Tweets: {this.state.tweets.length}</Text>
         )}
-        <FlatList
-          data={this.state.tweets}
-          showsHorizontalScrollIndicator={false}
-          renderItem={(item) => <Tweet {...item.item} />}
-          keyExtractor={this.keyExtractor}
-          // refreshing={refreshing}
-          // onRefresh={this._handleRefresh}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={this._handleRefresh}
-              tintColor="black"
-              colors={["red", "green"]}
-            />
-          }
-        />
+        <Animated.View
+          style={{
+            transform: [{ translateY: animation }]
+          }}
+        >
+          <FlatList
+            data={this.state.tweets}
+            showsHorizontalScrollIndicator={false}
+            renderItem={(item) => <Tweet {...item.item} />}
+            keyExtractor={this.keyExtractor}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={this._handleRefresh}
+                tintColor="transparent"
+              // colors={["red", "green"]}
+              />
+            }
+          />
+
+        </Animated.View>
+
       </View>
     );
   }

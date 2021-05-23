@@ -48,4 +48,7 @@ export default StyleSheet.create({
   symbolTitle: {
     maxWidth: "60%",
   },
+  tolalAmount: {
+    marginLeft: getWidthWithScaleFactor(12),
+  }
 });
