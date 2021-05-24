@@ -27,8 +27,8 @@ export default StyleSheet.create({
     flexDirection: "row",
   },
   searchIcon: {
-    marginRight: getWidthWithScaleFactor(5),
-    marginLeft: getWidthWithScaleFactor(5),
+    paddingRight: getWidthWithScaleFactor(5),
+    paddingLeft: getWidthWithScaleFactor(5),
     justifyContent: "center"
   },
   horizontalTooltipsBlock: {
@@ -51,5 +51,5 @@ export default StyleSheet.create({
   },
   tolalAmount: {
     marginLeft: getWidthWithScaleFactor(12),
-  }
+  },
 });

@@ -7,7 +7,9 @@ import {
   RefreshControl,
   Text,
   FlatList,
-  Animated
+  Animated,
+  Modal,
+  Pressable
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -18,15 +20,18 @@ import axios from "axios";
 /* CUSTOM MODULES */
 import { HeaderTitle, Icons } from "src/components";
 import SIZES from "src/theme/sizes";
+import { getTweets, getSymbols } from "src/utils/requests/symbols/symbols";
 
 import Tweet from "./components/tweet/tweet";
 import Tooltip from "./components/tooltip/tooltip";
+import SideMenu from "./components/sidemenu/sidemenu";
 
 /* STYLES */
 import styles from "./styles";
 
 /* TYPES */
 import { TNavigation } from "src/types";
+import { COLORS } from "src/theme";
 
 interface IDefaultProps {
   navigation: TNavigation;
@@ -42,6 +47,7 @@ export interface State {
   symbols: Array<Object>;
   tweets: Array<Object>;
   query: string;
+  modalVisible: boolean;
 }
 
 const PROXY = "https://pacific-taiga-61753.herokuapp.com";
@@ -67,12 +73,13 @@ export default class extends Component<Props, State> {
     searchField: "",
     searchResults: ["AAP", "AAPL", "AAPC"],
     // searchResults: [],
-    selectedResultIndex: null, // null | number
+    selectedResultIndex: null,
     refreshing: false,
     tweets: [],
     symbols: [],
     query: "",
     animation: new Animated.Value(SIZES.HEIGHT),
+    modalVisible: false
   };
 
   timeout: any = null; // TODO(mikle): find timeout type
@@ -94,7 +101,7 @@ export default class extends Component<Props, State> {
 
   getInitialList = async (title: string) => {
     try {
-      const response = await axios.post(`${PROXY}/tweets`, { title });
+      const response = await getTweets(title);
       this.setState(() => ({
         tweets: response.data.messages,
       }));
@@ -108,7 +115,7 @@ export default class extends Component<Props, State> {
 
   searchSymbols = async (title: string) => {
     try {
-      const response = await axios.post(`${PROXY}/search-symbols`, { title });
+      const response = await getSymbols(title);
       this.setState(() => ({
         symbols: response.data.results,
       }));
@@ -116,10 +123,6 @@ export default class extends Component<Props, State> {
       // console.log("error", error);
     }
   };
-
-  componentDidMount() {
-    // this.getInitialList("AAPL");
-  }
 
   /**
    * Go to page
@@ -150,10 +153,12 @@ export default class extends Component<Props, State> {
    * Open drawer handler
    */
   openDrawer = (): void => {
-    const { navigation } = this.props;
-    if (navigation) {
-      navigation.openDrawer(); // TODO(mikle): add type to openDrawer
-    }
+    // in case we want to use modalDrawer in future
+    // const { navigation } = this.props;
+    // if (navigation) {
+    //   navigation.openDrawer(); // TODO(mikle): add type to openDrawer
+    // }
+    this.setModalVisible(true)
   };
 
   keyExtractor = (item: any, index: number): string => index.toString(); // TODO(mikle): fix any
@@ -248,23 +253,29 @@ export default class extends Component<Props, State> {
     }
   };
 
+  // Side menu
+
+  setModalVisible = (modalVisible: boolean) => {
+    this.setState(() => ({ modalVisible }))
+  }
+
   // ==================
   // ===== RENDER =====
   // ==================
 
   render(): JSX.Element {
-    const { query, refreshing, selectedResultIndex, animation } = this.state;
+    const { query, refreshing, selectedResultIndex, animation, modalVisible } = this.state;
     return (
       <View style={styles.container}>
         <View style={styles.searchField}>
           <TouchableWithoutFeedback onPress={this.openDrawer}>
             <View style={styles.searchIcon}>
-              <Icons type="material" name="menu" size={22} color={"grey"} />
+              <Icons type="material" name="menu" size={22} color={COLORS.GREY} />
             </View>
           </TouchableWithoutFeedback>
           <View style={styles.searchBlock}>
             <View style={styles.searchIcon}>
-              <Icons type="material" name="search" size={22} color={"grey"} />
+              <Icons type="material" name="search" size={22} color={COLORS.GREY} />
             </View>
             <TextInput
               editable
@@ -332,7 +343,8 @@ export default class extends Component<Props, State> {
             }
           />
         </Animated.View>
-      </View>
+        <SideMenu modalVisible={modalVisible} setModalVisible={this.setModalVisible} />
+      </View >
     );
   }
 }

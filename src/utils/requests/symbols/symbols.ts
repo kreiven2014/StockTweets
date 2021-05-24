@@ -1,25 +1,10 @@
-import { getRequest } from "src/utils/requests/base_requests";
 
-export const login = (): Promise<string> =>
-  new Promise((resolve) => {
-    setTimeout(() => resolve("login"), 1500);
-  });
+import axios from "axios";
+// TODO(mikle): move to constants if needed
+const PROXY = "https://pacific-taiga-61753.herokuapp.com";
 
-export const signUp = (): Promise<string> =>
-  new Promise((resolve) => {
-    setTimeout(() => resolve("signUp"), 1500);
-  });
+export const getTweets = (title: string) =>
+  axios.post(`${PROXY}/tweets`, { title });
 
-export const forgotPassword = (): Promise<string> =>
-  new Promise((resolve) => {
-    setTimeout(() => resolve("forgotPassword"), 1500);
-  });
-
-export const resetPassword = (): Promise<string> =>
-  new Promise((resolve) => {
-    setTimeout(() => resolve("resetPassword"), 1500);
-  });
-
-export const getSymbols = (): Promise<string> =>
-  // getRequest("https://api.stocktwits.com/api/2/streams/symbol/AAPL.json");
-  getRequest("http://localhost:3000/api");
+export const getSymbols = (title: string) =>
+  axios.post(`${PROXY}/search-symbols`, { title });

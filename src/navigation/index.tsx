@@ -22,6 +22,7 @@ export interface Props {
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
+// IN CASE we need to use modal drawer for other screens
 function MyDrawer() {
   return (
     <Drawer.Navigator

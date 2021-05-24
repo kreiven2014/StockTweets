@@ -33,4 +33,5 @@ export default {
   HEADER: {
     TEXT: "#2F323D",
   },
+  GREY: "#808080"
 };
